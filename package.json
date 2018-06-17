@@ -1,0 +1,31 @@
+{
+  "name": "tree-sitter-bibtex",
+  "version": "0.0.0",
+  "description": "Tree sitter grammar for bibtex",
+  "main": "index.js",
+  "repository": "https://github.com/Aerijo/tree-sitter-bibtex",
+  "bugs": "https://github.com/Aerijo/tree-sitter-bibtex/issues",
+  "keywords": [
+    "bibtex",
+    "grammar",
+    "syntax",
+    "highlighting",
+    "parser",
+    "lexer"
+  ],
+  "author": "Benjamin Gray",
+  "license": "MIT",
+  "dependencies": {
+    "nan": "^2.4.0"
+  },
+  "devDependencies": {
+    "concat-stream": "^1.6.0",
+    "tree-sitter": "^0.12.8",
+    "tree-sitter-cli": "^0.12.5"
+  },
+  "scripts": {
+    "build": "tree-sitter generate && node-gyp build",
+    "parse": "node scripts/parse.js",
+    "test": "tree-sitter test && tree-sitter parse examples --quiet --time"
+  }
+}
