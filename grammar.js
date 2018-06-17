@@ -5,39 +5,68 @@ let noCase = str => {
     .map(c => /[a-zA-Z]/.test(c) ? `[${c.toLowerCase()}${c.toUpperCase()}]` : c)
     .join("")
   );
-}
+};
+
+/*
+  Adapted from the PEG grammar given here https://github.com/aclements/biblib
+*/
 
 module.exports = grammar({
   name: "bibtex",
 
   rules: {
-    program: $ => repeat(choice($.command, $.comment)),
+    program: $ => repeat(choice($._at_command, $._comment)),
 
-    _ws: $ => /[\s\t\n]*/, // newlines seem to be ignored
+    _comment: $ => /[^@]+/,
 
-    comment: $ => /[^@]*/,
+    _at_command: $ => seq('@', $._ws, $._command),
 
-    command: $ => seq($.begin_command, $._ws, choice(
+    _command: $ => choice(
+      $.comment,
       $.string,
-      $.comment_block,
       $.preamble,
       $.entry
-    )),
+    ),
 
-    begin_command: $ => "@",
+    _ws: $ => /[\s\t\n]*/,
 
-    string: $ => seq(noCase("string"), $._ws, "{", $.entry_contents, "}"), // FIXME
+    comment: $ => noCase("comment"),
 
-    comment_block: $ => seq(noCase("comment"), $._ws, "{", $.comment_contents, "}"),
 
-    preamble: $ => seq(noCase("preamble"), $._ws, "{", $.entry_contents, "}"),
+    string: $ => seq(noCase("string"), $._ws, $._string_block),
+    _string_block: $ => choice(
+      seq('{', $.string_body, '}'),
+      seq('(', $.string_body, ')')
+    ),
+    string_body: $ => seq($.identifier, $._ws, '=', $._ws, $.value),
 
-    entry: $ => seq($.entry_type, $._ws, "{", $.entry_contents, "}"),
 
-    entry_type: $ => /[a-zA-Z]*/,
+    preamble: $ => seq(noCase("preamble"), $._ws, $._preamble_block),
+    _preamble_block: $ => choice(
+      seq('{', $.preamble_body, '}'),
+      seq('(', $.preamble_body, ')')
+    ),
+    preamble_body: $ => $.value,
 
-    entry_contents: $ => /[^\\{}$&#^_~%\[\]]+/,
 
-    comment_contents: $ => /[^\}]/
+    entry: $ => seq($.identifier, $._ws, $._entry_block),
+    _entry_block: $ => choice(
+      seq('{', $._ws, $.key, $._ws, repeat($.entry_body), optional(','), $._ws, '}'),
+      seq('(', $._ws, $.kep, $._ws, repeat($.entry_body), optional(','), $._ws, ')')
+    ),
+
+    key: $ => /[^,\s\t\n\}]*/,
+    kep: $ => /[^,\s\t\n\)]*/, // "parentheses key"
+
+    entry_body: $ => seq(',', $._ws, $.identifier, $._ws, '=', $._ws, $.value, $._ws),
+
+
+    identifier: $ => {
+      const first = /[\!\$\&\*\+\-\.\/\:\;<>\?\@\[\]\\\^\_\`\|\~a-zA-Z]/; // https://regex101.com/r/fAkBEf/1
+      const later = /[\!\$\&\*\+\-\.\/\:\;<>\?\@\[\]\\\^\_\`\|\~a-zA-Z0-9]/;
+      return token(seq(first, repeat(later)));
+    },
+
+    value: $ => /[^,\)\}]*/
   }
-})
+});
