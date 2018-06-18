@@ -51,15 +51,14 @@ module.exports = grammar({
 
     entry: $ => seq($.identifier, $._ws, $._entry_block),
     _entry_block: $ => choice(
-      seq('{', $._ws, $.key, $._ws, repeat($.field), optional(','), $._ws, '}'),
-      seq('(', $._ws, $.kep, $._ws, repeat($.field), optional(','), $._ws, ')')
+      seq('{', $._ws, $.key_b, $._ws, repeat(seq(',', $.field)), optional(','), $._ws, '}'),
+      seq('(', $._ws, $.key_p, $._ws, repeat(seq(',', $.field)), optional(','), $._ws, ')')
     ),
 
-    key: $ => /[^,\s\t\n\}]*/,
-    kep: $ => /[^,\s\t\n\)]*/, // "parentheses key"
+    key_b: $ => /[^,\s\t\n\}]*/, // "braces key"
+    key_p: $ => /[^,\s\t\n\)]*/, // "parentheses key"
 
-    field: $ => seq(',', $._ws, $.identifier, $._ws, '=', $._ws, $.value),
-
+    field: $ => seq($._ws, $.identifier, $._ws, '=', $._ws, $.value),
 
     identifier: $ => {
       const first = /[\!\$\&\*\+\-\.\/\:\;<>\?\@\[\]\\\^\_\`\|\~a-zA-Z]/; // https://regex101.com/r/fAkBEf/1
