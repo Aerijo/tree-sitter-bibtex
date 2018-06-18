@@ -63,7 +63,7 @@ module.exports = grammar({
 
     identifier: $ => {
       const first = /[\!\$\&\*\+\-\.\/\:\;<>\?\@\[\]\\\^\_\`\|\~a-zA-Z]/; // https://regex101.com/r/fAkBEf/1
-      const later = /[\!\$\&\*\+\-\.\/\:\;<>\?\@\[\]\\\^\_\`\|\~a-zA-Z0-9]/;
+      const later = /[\!\$\&\*\+\-\.\/\:\;<>\?\@\[\]\\\^\_\`\|\~a-zA-Z0-9]/; // basically all visible ascii except: "#%'(),={}
       return token(seq(first, repeat(later)));
     },
 
@@ -71,23 +71,23 @@ module.exports = grammar({
 
     piece: $ => choice(
       /[0-9]+/,
-      seq("{", $.balanced, '}'),
-      seq('"', $.quote_balanced, '"'),
+      seq("{", repeat($._balanced), '}'),
+      seq('"', repeat($._quote_balanced), '"'),
       $.identifier
     ),
 
-    balanced: $ => choice(
-      seq('{', repeat($.balanced), '}'),
-      $.text
+    _balanced: $ => choice(
+      seq('{', repeat($._balanced), '}'),
+      $._text
     ),
 
-    quote_balanced: $ => choice(
-      seq('"', repeat($.balanced), '"'),
-      $.quote_text
+    _quote_balanced: $ => choice(
+      seq('{', repeat($._balanced), '}'),
+      $._quote_text
     ),
 
-    text: $ => /[^\{\}]*/,
+    _text: $ => /[^\{\}]+/,
 
-    quote_text: $ => /[^\"\{\}]*/
+    _quote_text: $ => /[^\"\{]+/
   }
 });
