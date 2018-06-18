@@ -15,14 +15,14 @@ module.exports = grammar({
   name: "bibtex",
 
   rules: {
-    program: $ => repeat(choice($._at_command, $._comment)),
+    program: $ => repeat(choice($._at_command, $.comment)),
 
-    _comment: $ => /[^@]+/,
+    comment: $ => /[^@]+/,
 
     _at_command: $ => seq('@', $._ws, $._command),
 
     _command: $ => choice(
-      $.comment,
+      $.comment_command,
       $.string,
       $.preamble,
       $.entry
@@ -30,7 +30,7 @@ module.exports = grammar({
 
     _ws: $ => /[\s\t\n]*/,
 
-    comment: $ => noCase("comment"),
+    comment_command: $ => noCase("comment"),
 
 
     string: $ => seq(noCase("string"), $._ws, $._string_block),
