@@ -71,11 +71,23 @@ module.exports = grammar({
 
     piece: $ => choice(
       /[0-9]+/,
-      seq("{", $.text, '}'),
-      seq('"', $.text, '"'),
+      seq("{", $.balanced, '}'),
+      seq('"', $.quote_balanced, '"'),
       $.identifier
     ),
 
-    text: $ => /[^\}\"]*/
+    balanced: $ => choice(
+      seq('{', repeat($.balanced), '}'),
+      $.text
+    ),
+
+    quote_balanced: $ => choice(
+      seq('"', repeat($.balanced), '"'),
+      $.quote_text
+    ),
+
+    text: $ => /[^\{\}]*/,
+
+    quote_text: $ => /[^\"\{\}]*/
   }
 });
