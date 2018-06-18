@@ -51,14 +51,14 @@ module.exports = grammar({
 
     entry: $ => seq($.identifier, $._ws, $._entry_block),
     _entry_block: $ => choice(
-      seq('{', $._ws, $.key, $._ws, repeat($.entry_body), optional(','), $._ws, '}'),
-      seq('(', $._ws, $.kep, $._ws, repeat($.entry_body), optional(','), $._ws, ')')
+      seq('{', $._ws, $.key, $._ws, repeat($.field), optional(','), $._ws, '}'),
+      seq('(', $._ws, $.kep, $._ws, repeat($.field), optional(','), $._ws, ')')
     ),
 
     key: $ => /[^,\s\t\n\}]*/,
     kep: $ => /[^,\s\t\n\)]*/, // "parentheses key"
 
-    entry_body: $ => seq(',', $._ws, $.identifier, $._ws, '=', $._ws, $.value, $._ws),
+    field: $ => seq(',', $._ws, $.identifier, $._ws, '=', $._ws, $.value),
 
 
     identifier: $ => {
@@ -67,6 +67,15 @@ module.exports = grammar({
       return token(seq(first, repeat(later)));
     },
 
-    value: $ => /[^,\)\}]*/
+    value: $ => seq($.piece, $._ws, repeat(seq('#', $._ws, $.piece, $._ws))),
+
+    piece: $ => choice(
+      /[0-9]+/,
+      seq("{", $.text, '}'),
+      seq('"', $.text, '"'),
+      $.identifier
+    ),
+
+    text: $ => /[^\}\"]*/
   }
 });
