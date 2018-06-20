@@ -43,9 +43,9 @@ module.exports = grammar({
       seq('(', $.value, ')')
     )),
 
-    entry: $ => seq('@', alias($.identifier, "entry_name"), choice(
-      seq('{', alias($.key_b, "key"), repeat(seq(',', $.field)), optional(','), '}'),
-      seq('(', alias($.key_p, "key"), repeat(seq(',', $.field)), optional(','), ')')
+    entry: $ => seq('@', $.identifier, choice(
+      seq('{', $.key_b, repeat(seq(',', $.field)), optional(','), '}'),
+      seq('(', $.key_p, repeat(seq(',', $.field)), optional(','), ')')
     )),
 
     key_b: $ => /[^,\s\t\n\}]+/, // "braces key"
