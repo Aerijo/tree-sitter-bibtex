@@ -34,7 +34,7 @@ enum {
   sym__brace_text = 18,
   sym__quote_text = 19,
   sym_program = 20,
-  sym__command = 21,
+  sym__command_or_entry = 21,
   sym_comment_command = 22,
   sym_string_command = 23,
   sym_preamble_command = 24,
@@ -76,7 +76,7 @@ static const char *ts_symbol_names[] = {
   [sym__brace_text] = "_brace_text",
   [sym__quote_text] = "_quote_text",
   [sym_program] = "program",
-  [sym__command] = "_command",
+  [sym__command_or_entry] = "_command_or_entry",
   [sym_comment_command] = "comment_command",
   [sym_string_command] = "string_command",
   [sym_preamble_command] = "preamble_command",
@@ -181,7 +181,7 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = true,
     .named = true,
   },
-  [sym__command] = {
+  [sym__command_or_entry] = {
     .visible = false,
     .named = true,
   },
@@ -1169,7 +1169,7 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
   },
   [1] = {
     [sym_program] = STATE(4),
-    [sym__command] = STATE(2),
+    [sym__command_or_entry] = STATE(2),
     [sym_comment_command] = STATE(2),
     [sym_string_command] = STATE(2),
     [sym_preamble_command] = STATE(2),
@@ -1194,7 +1194,7 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
     [ts_builtin_sym_end] = ACTIONS(19),
   },
   [5] = {
-    [sym__command] = STATE(2),
+    [sym__command_or_entry] = STATE(2),
     [sym_comment_command] = STATE(2),
     [sym_string_command] = STATE(2),
     [sym_preamble_command] = STATE(2),
@@ -1222,7 +1222,7 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
     [anon_sym_LPAREN] = ACTIONS(35),
   },
   [10] = {
-    [sym__command] = STATE(2),
+    [sym__command_or_entry] = STATE(2),
     [sym_comment_command] = STATE(2),
     [sym_string_command] = STATE(2),
     [sym_preamble_command] = STATE(2),

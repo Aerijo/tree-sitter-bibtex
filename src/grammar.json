@@ -8,7 +8,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "_command"
+            "name": "_command_or_entry"
           },
           {
             "type": "SYMBOL",
@@ -21,7 +21,7 @@
       "type": "PATTERN",
       "value": "[^@\\n\\s\\t][^@]*"
     },
-    "_command": {
+    "_command_or_entry": {
       "type": "CHOICE",
       "members": [
         {
