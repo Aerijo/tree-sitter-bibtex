@@ -17,6 +17,8 @@ function ignoreCase(str) {
 module.exports = grammar({
   name: "bibtex",
 
+  extras: $ => [/[\s\n\t]/],
+
   rules: {
     program: $ => repeat(choice($._command_or_entry, $.comment)),
 

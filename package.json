@@ -11,7 +11,8 @@
     "syntax",
     "highlighting",
     "parser",
-    "lexer"
+    "lexer",
+    "tree-sitter"
   ],
   "author": "Benjamin Gray",
   "license": "MIT",
