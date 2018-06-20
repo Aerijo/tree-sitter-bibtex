@@ -1,0 +1,7 @@
+===============
+Paren delimited entry with closing paren in key
+===============
+
+@BOOK(Ca)rey, AUTHOR="G. V. Carey")
+
+---

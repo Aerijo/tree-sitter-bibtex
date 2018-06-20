@@ -5395,8 +5395,8 @@ at_bib_command := false;@/
 @<Skip to the next database entry or \.{.bib} command@>;
 @<Scan the entry type or scan and process the \.{.bib} command@>;
 eat_bib_white_and_eof_check;
-@<Scan the entry's database key@>;
-eat_bib_white_and_eof_check;
+@<Scan the entry's database key@>; { stops on comma or whitespace (or end brace IF brace delimited)}
+eat_bib_white_and_eof_check; { goes from current position to first non-white, including current position if already non-white }
 @<Scan the entry's list of fields@>;
 exit:
 end;
@@ -6167,9 +6167,9 @@ if (right_outer_delim = right_paren) then       {to allow it in a database key}
     if (scan1_white(comma)) then                {ok if database key ends line}
         do_nothing;
     end
-  else
-    if (scan2_white(comma,right_brace)) then {|right_brace=right_outer_delim|}
-        do_nothing;
+else
+  if (scan2_white(comma,right_brace)) then {|right_brace=right_outer_delim|}
+      do_nothing;
 @<Check for a database key of interest@>;
 end
 
@@ -6399,7 +6399,7 @@ then reads a |right_outer_delim|, ending the current entry.
 
 @<Scan the entry's list of fields@>=
 begin
-while (scan_char <> right_outer_delim) do
+while (scan_char <> right_outer_delim) do { we are on the comma following a key, or at end delim }
     begin
     if (scan_char <> comma) then
         bib_one_of_two_expected_err (comma,right_outer_delim);

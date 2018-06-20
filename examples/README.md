@@ -1,0 +1,1 @@
+Most of these were taken from CTAN. Some of them appear to be invalid, so I've edited them somewhat to make them work (they would throw an error when I actually tried to compile a LaTeX document using them).

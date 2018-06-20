@@ -1,0 +1,9 @@
+===============
+Lot of strings
+===============
+
+@STRING{ jobs = {Journal of Beckett Studies} }
+@STRING{ jobsns = {Journal of Beckett Studies, {\normalfont n.s.},} }
+@STRING{ l-bc = {BC O'Neill} }
+
+---

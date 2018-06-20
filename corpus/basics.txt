@@ -1,0 +1,9 @@
+===============
+String with number
+===============
+
+@ string { total = 1234 }
+
+---
+
+(program (string (identifier) (value (piece (integer)))))
