@@ -285,11 +285,11 @@
     },
     "key_b": {
       "type": "PATTERN",
-      "value": "[^,\\s\\t\\n\\}]+"
+      "value": "[^,\\s\\t\\n\\}]*"
     },
     "key_p": {
       "type": "PATTERN",
-      "value": "[^,\\s\\t\\n]+"
+      "value": "[^,\\s\\t\\n]*"
     },
     "field": {
       "type": "SEQ",

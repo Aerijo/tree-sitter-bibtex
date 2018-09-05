@@ -846,6 +846,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
         ADVANCE(43);
       END_STATE();
     case 61:
+      ACCEPT_TOKEN(sym_key_b);
       if (lookahead == '\t' ||
           lookahead == '\n' ||
           lookahead == '\r' ||
@@ -868,6 +869,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
         ADVANCE(62);
       END_STATE();
     case 63:
+      ACCEPT_TOKEN(sym_key_p);
       if (lookahead == '\t' ||
           lookahead == '\n' ||
           lookahead == '\r' ||

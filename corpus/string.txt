@@ -1,4 +1,14 @@
 ===============
+With number
+===============
+
+@ string { total = 123 }
+
+---
+
+(program (string_command (identifier) (value (token (nonnegative_integer)))))
+
+===============
 Lot of strings
 ===============
 
@@ -7,3 +17,9 @@ Lot of strings
 @STRING{ l-bc = {BC O'Neill} }
 
 ---
+
+(program
+  (string_command (identifier) (value (token (string))))
+  (string_command (identifier) (value (token (string))))
+  (string_command (identifier) (value (token (string))))
+)

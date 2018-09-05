@@ -1,7 +1,45 @@
 ===============
-Paren delimited entry with closing paren in key
+Empty
 ===============
 
-@BOOK(Ca)rey, AUTHOR="G. V. Carey")
+@misc{}
+@misc{,}
+@misc()
+@misc(,)
 
 ---
+
+(program
+  (entry (identifier) (key_b))
+  (entry (identifier) (key_b))
+  (entry (identifier) (key_p) (MISSING))
+  (entry (identifier) (key_p))
+)
+
+===============
+Only key
+===============
+
+@misc{key}
+@misc{key,}
+@misc(key)
+@misc(key,)
+
+---
+
+(program
+  (entry (identifier) (key_b))
+  (entry (identifier) (key_b))
+  (entry (identifier) (key_p) (MISSING))
+  (entry (identifier) (key_p))
+)
+
+===============
+Paren delimited with closing paren in key
+===============
+
+@BOOK(key)still_key, AUTHOR="G. V. Carey")
+
+---
+
+(program (entry (identifier) (key_p) (field (identifier) (value (token (string))))))

@@ -14,8 +14,21 @@ Some notes before I start:
   - `@<...@>` [note no `=` sign] runs a PASCAL `procedure` defined in the above manor
   - There is an explanation here http://mirror.aarnet.edu.au/pub/CTAN/info/knuth/webman.pdf
 
+
 ## Unsorted
 - An entry key will be stripped ofleading whitespace, and the scan will stop at the first whitespace character or comma. So in effect, an entry key is anything that's not whitespace or a comma.
+
+- Biber
+  - doesn't let you use `)` in a key name at all
+  - Must have every entry / command start with `{` or `(` or `"`. So `@comment this` is now an error.
+  - Uses the `btparse` library to read in `bib` files.
+  - The easiest way to break one or the other is `@comment{this is a @ entry }`
+    - Biber interprets the brace contents as a comment, and works fine.
+    - BiBTeX enters normal comment mode when `@comment` ends, and so sees `@ entry }` as a normal entry, and throws an error.
+    - These two behaviours are fundamentally incompatible (e.g., think an email address in a comment). However, Biber is the more lenient of the two, and the user will get an error anyway if they try to run it with BiBTeX.
+    - So definitely leaning towards making `tree-sitter-biber` the default one to use, and allow magic comment / setting to override if the user wants.
+
+
 
 ## Entry point [5100]
 ```%WEB

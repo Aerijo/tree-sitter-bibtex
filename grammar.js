@@ -48,12 +48,12 @@ module.exports = grammar({
       seq('(', $.key_p, repeat(seq(',', $.field)), optional(','), ')')
     )),
 
-    key_b: $ => /[^,\s\t\n\}]+/, // "braces key"
-    key_p: $ => /[^,\s\t\n]+/, // "parentheses key" // the ) is actually allowed
+    key_b: $ => /[^,\s\t\n\}]*/, // "braces key" / can be empty (will not throw error) but cannot be referenced this way
+    key_p: $ => /[^,\s\t\n]*/, // "parentheses key" // the ) is actually allowed
 
     field: $ => seq($.identifier, '=', $.value),
 
-    identifier: $ => { // `scan_identifier` [2210]
+    identifier: $ => { // `scan_identifier` [2210] // tests indicate unicode works too (with xelatex)
       const first = /[\!\$\&\*\+\-\.\/\:\;<>\?\@\[\]\\\^\_\`\|\~a-zA-Z]/; // https://regex101.com/r/fAkBEf/1
       const later = /[\!\$\&\*\+\-\.\/\:\;<>\?\@\[\]\\\^\_\`\|\~a-zA-Z0-9]/; // basically all visible ASCII except: "#%'(),={}
       return token(seq(first, repeat(later)));

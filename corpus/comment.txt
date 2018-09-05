@@ -1,21 +1,25 @@
 ===============
-Comments
+Line
 ===============
 
 hello world
-@comment this is a separate comment to the "at" comment from before
-
-because it literally stops reading after "comment" and does not look
-for the end of the line, or a sentence, or anything.
-By the way,
 
 this is all considered one comment
 
 ---
 
-(program (comment) (comment_command) (comment))
-
+(program (comment))
 
 ===============
-Different Cases
+Command
 ===============
+
+@comment{this is a comment}
+@comment the braces were redundant
+
+---
+
+(program
+  (comment_command) (comment)
+  (comment_command) (comment)
+)
