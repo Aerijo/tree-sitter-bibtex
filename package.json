@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-bibtex",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Tree sitter grammar for bibtex",
   "main": "index.js",
   "repository": "https://github.com/Aerijo/tree-sitter-bibtex",
